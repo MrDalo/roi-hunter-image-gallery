@@ -52,7 +52,7 @@ export class ImageService {
    * @returns Image URL string
    */
   static getImageUrl(id: string, width: number = 400, height: number = 300): string {
-    return `${BASE_URL}/${width}/${height}?id=${id}`;
+    return `${BASE_URL}/id/${id}/${width}/${height}`;
   }
 
   /**
@@ -61,6 +61,6 @@ export class ImageService {
    * @returns Large image URL string
    */
   static getLargeImageUrl(id: string): string {
-    return `${BASE_URL}/800/600?id=${id}`;
+    return `${BASE_URL}/id/${id}/800/600`;
   }
 }

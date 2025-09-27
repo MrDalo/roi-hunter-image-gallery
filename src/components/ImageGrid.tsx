@@ -1,16 +1,9 @@
 import React from "react";
-import {
-  Box,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Skeleton,
-  Alert,
-} from "@mui/material";
+import { Box, Alert } from "@mui/material";
 import type { LoremPicsumImage } from "../types";
-import { ImageService } from "../services/imageService";
 import { HTTPError } from "../errors";
+import ImageCard from "./ImageCard";
+import ImageCardSkeleton from "./ImageCardSkeleton";
 
 interface ImageGridProps {
   images: LoremPicsumImage[];
@@ -52,13 +45,7 @@ const ImageGrid: React.FC<ImageGridProps> = ({
         }}
       >
         {Array.from({ length: 10 }).map((_, index) => (
-          <Card key={index} sx={{ height: "100%" }}>
-            <Skeleton variant="rectangular" height={200} />
-            <CardContent>
-              <Skeleton variant="text" />
-              <Skeleton variant="text" width="60%" />
-            </CardContent>
-          </Card>
+          <ImageCardSkeleton key={index} />
         ))}
       </Box>
     );
@@ -87,46 +74,7 @@ const ImageGrid: React.FC<ImageGridProps> = ({
       }}
     >
       {images.map((image) => (
-        <Card
-          key={image.id}
-          sx={{
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            cursor: "pointer",
-            transition: "all 0.2s ease-in-out",
-            "&:hover": {
-              transform: "translateY(-4px)",
-              boxShadow: 6,
-            },
-          }}
-          onClick={() => onImageClick(image)}
-        >
-          <CardMedia
-            component="img"
-            height="200"
-            image={ImageService.getImageUrl(image.id, 400, 300)}
-            alt={`Photo by ${image.author}`}
-            sx={{ objectFit: "cover" }}
-          />
-          <CardContent sx={{ flexGrow: 1, p: 2 }}>
-            <Typography
-              gutterBottom
-              variant="subtitle2"
-              component="h3"
-              sx={{ fontWeight: 500 }}
-            >
-              Photo by {image.author}
-            </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ fontSize: "0.875rem" }}
-            >
-              {image.width} × {image.height}
-            </Typography>
-          </CardContent>
-        </Card>
+        <ImageCard key={image.id} image={image} onImageClick={onImageClick} />
       ))}
     </Box>
   );

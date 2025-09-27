@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Container, Typography, Box } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import { useImages } from "./hooks/useImages";
 import { usePaginationContext } from "./hooks/usePaginationContext";
 import ImageGrid from "./components/ImageGrid";
 import Pagination from "./components/Pagination";
 import ImageModal from "./components/ImageModal";
-import type { LoremPicsumImage } from "./types";
 import HeaderBar from "./components/HeaderBar";
+import PageHeader from "./components/PageHeader";
+import type { LoremPicsumImage } from "./types";
 
 function App() {
   const [selectedImage, setSelectedImage] = useState<LoremPicsumImage | null>(
@@ -44,20 +45,7 @@ function App() {
       {/* Main Content */}
       <Box component="main" sx={{ flexGrow: 1 }}>
         <Container maxWidth="lg" sx={{ py: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom align="center">
-            Lorem Picsum Gallery
-          </Typography>
-
-          <Typography
-            variant="body1"
-            color="text.secondary"
-            align="center"
-            sx={{ mb: 4 }}
-            component="p"
-          >
-            Browse through beautiful photos with pagination. Click on any image
-            to view it in full size.
-          </Typography>
+          <PageHeader />
 
           {/* Image Grid */}
           <ImageGrid
@@ -75,7 +63,6 @@ function App() {
               canGoPrevious={canGoPrevious}
               onNext={goToNext}
               onPrevious={goToPrevious}
-              imagesCount={images.length}
             />
           )}
         </Container>

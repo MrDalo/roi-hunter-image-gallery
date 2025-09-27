@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   Box,
   Card,
   CardMedia,
-  CardContent,
-  Typography,
   IconButton,
   Fade,
   Backdrop,
@@ -13,6 +11,9 @@ import {
 import { Close } from "@mui/icons-material";
 import type { LoremPicsumImage } from "../types";
 import { ImageService } from "../services/imageService";
+import ImageModalSkeleton from "./ImageModalSkeleton";
+import ImageError from "./ImageError";
+import ImageDetails from "./ImageDetails";
 
 interface ImageModalProps {
   image: LoremPicsumImage | null;
@@ -27,7 +28,27 @@ const ImageModal: React.FC<ImageModalProps> = ({
   onClose,
   description,
 }) => {
+  const [isImageLoading, setIsImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
+
+  // Reset loading state when modal opens with new image
+  useEffect(() => {
+    if (isOpen && image) {
+      setIsImageLoading(true);
+      setImageError(false);
+    }
+  }, [isOpen, image]);
+
   if (!image) return null;
+
+  const handleImageLoad = () => {
+    setIsImageLoading(false);
+  };
+
+  const handleImageError = () => {
+    setIsImageLoading(false);
+    setImageError(true);
+  };
 
   return (
     <Modal
@@ -83,45 +104,35 @@ const ImageModal: React.FC<ImageModalProps> = ({
               <Close />
             </IconButton>
 
-            {/* Image */}
-            <CardMedia
-              component="img"
-              image={ImageService.getLargeImageUrl(image.id)}
-              alt={`Photo by ${image.author}`}
-              sx={{
-                width: "100%",
-                maxHeight: "70vh",
-                objectFit: "contain",
-                bgcolor: "grey.100",
-              }}
-            />
+            {/* Image with skeleton fallback */}
+            <Box sx={{ position: "relative" }}>
+              {/* Skeleton placeholder */}
+              {isImageLoading && <ImageModalSkeleton />}
+
+              {/* Actual image */}
+              {!imageError && (
+                <CardMedia
+                  component="img"
+                  image={ImageService.getLargeImageUrl(image.id)}
+                  alt={`Photo by ${image.author}`}
+                  onLoad={handleImageLoad}
+                  onError={handleImageError}
+                  sx={{
+                    width: "100%",
+                    maxHeight: "70vh",
+                    objectFit: "contain",
+                    bgcolor: "grey.100",
+                    display: isImageLoading ? "none" : "block",
+                  }}
+                />
+              )}
+
+              {/* Error fallback */}
+              {imageError && <ImageError />}
+            </Box>
 
             {/* Image details */}
-            <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" component="h2" gutterBottom>
-                Photo by {image.author}
-              </Typography>
-
-              <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-                <Typography variant="body2" color="text.secondary">
-                  <strong>Dimensions:</strong> {image.width} × {image.height}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  <strong>ID:</strong> {image.id}
-                </Typography>
-              </Box>
-
-              {description && (
-                <Box sx={{ mt: 2 }}>
-                  <Typography variant="subtitle2" gutterBottom>
-                    AI Description:
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {description}
-                  </Typography>
-                </Box>
-              )}
-            </CardContent>
+            <ImageDetails image={image} description={description} />
           </Card>
         </Box>
       </Fade>

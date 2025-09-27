@@ -8,7 +8,6 @@ interface PaginationProps {
   canGoPrevious: boolean;
   onNext: () => void;
   onPrevious: () => void;
-  imagesCount: number;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -17,7 +16,6 @@ const Pagination: React.FC<PaginationProps> = ({
   canGoPrevious,
   onNext,
   onPrevious,
-  imagesCount,
 }) => {
   return (
     <Box
@@ -42,9 +40,6 @@ const Pagination: React.FC<PaginationProps> = ({
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <Typography variant="body1" color="text.secondary">
           Page {currentPage}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          ({imagesCount} images)
         </Typography>
       </Box>
 
