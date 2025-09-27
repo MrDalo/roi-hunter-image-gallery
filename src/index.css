@@ -1,0 +1,22 @@
+/* Global styles for MUI application */
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegidity;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reset body to work with MUI */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  /* Let MUI handle typography and colors */
+}
+
+/* Ensure root div takes full height */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
