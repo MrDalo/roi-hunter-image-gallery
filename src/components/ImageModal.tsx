@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import type { LoremPicsumImage } from "../types";
-import { ApiService } from "../services/apiService";
+import { ImageService } from "../services/imageService";
 
 interface ImageModalProps {
   image: LoremPicsumImage | null;
@@ -86,7 +86,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
             {/* Image */}
             <CardMedia
               component="img"
-              image={ApiService.getLargeImageUrl(image.id)}
+              image={ImageService.getLargeImageUrl(image.id)}
               alt={`Photo by ${image.author}`}
               sx={{
                 width: "100%",

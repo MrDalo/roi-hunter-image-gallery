@@ -9,7 +9,7 @@ import {
   Alert,
 } from "@mui/material";
 import type { LoremPicsumImage } from "../types";
-import { ApiService } from "../services/apiService";
+import { ImageService } from "../services/imageService";
 import { HTTPError } from "../errors";
 
 interface ImageGridProps {
@@ -25,26 +25,13 @@ const ImageGrid: React.FC<ImageGridProps> = ({
   error,
   onImageClick,
 }) => {
-  const getErrorMessage = (error: HTTPError) => {
-    if (error.isClientError()) {
-      return "The requested images could not be found. Please try a different page.";
-    }
-    if (error.isServerError()) {
-      return "Server is temporarily unavailable. Please try again later.";
-    }
-    if (error.status === 0) {
-      return "Network connection error. Please check your internet connection.";
-    }
-    return `Error loading images: ${error.message}`;
-  };
-
   if (error) {
     return (
       <Alert
         severity={error.isServerError() ? "warning" : "error"}
         sx={{ my: 2 }}
       >
-        {getErrorMessage(error)}
+        {error.message}
       </Alert>
     );
   }
@@ -118,7 +105,7 @@ const ImageGrid: React.FC<ImageGridProps> = ({
           <CardMedia
             component="img"
             height="200"
-            image={ApiService.getImageUrl(image.id, 400, 300)}
+            image={ImageService.getImageUrl(image.id, 400, 300)}
             alt={`Photo by ${image.author}`}
             sx={{ objectFit: "cover" }}
           />

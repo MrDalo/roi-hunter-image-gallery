@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { ApiService } from '../services/apiService';
+import { ImageService } from '../services/imageService';
 import { HTTPError } from '../errors';
 import type { LoremPicsumImage, UseImagesResult } from '../types';
 
@@ -17,7 +17,7 @@ export const useImages = (page: number = 1, limit: number = 10): UseImagesResult
     refetch
   } = useQuery<LoremPicsumImage[], HTTPError>({
     queryKey: ['images', page, limit],
-    queryFn: () => ApiService.getImages(page, limit),
+    queryFn: () => ImageService.getImages(page, limit),
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
     retry: (failureCount, error) => {

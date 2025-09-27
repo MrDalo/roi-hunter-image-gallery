@@ -56,7 +56,7 @@ src/
 │   ├── useImages.ts      # Image fetching with TanStack Query
 │   └── usePaginationContext.ts  # Pagination context consumer
 ├── services/             # External API integrations
-│   └── apiService.ts     # Lorem Picsum API service layer
+│   └── imageService.ts     # Lorem Picsum API service layer
 ├── errors/               # Custom error handling
 │   ├── HTTPError.ts      # Custom HTTP error class
 │   └── index.ts          # Error exports

@@ -3,7 +3,7 @@ import { HTTPError } from '../errors';
 
 const BASE_URL = 'https://picsum.photos';
 
-export class ApiService {
+export class ImageService {
   /**
    * Fetch a list of images from Lorem Picsum API
    * @param page - Page number (1-based)
@@ -15,7 +15,20 @@ export class ApiService {
       const response = await fetch(`${BASE_URL}/v2/list?page=${page}&limit=${limit}`);
 
       if (!response.ok) {
-        throw HTTPError.fromResponse(response, 'Failed to fetch images');
+        // Provide specific error messages based on status code
+        let errorMessage: string;
+
+        if (response.status === 404) {
+          errorMessage = 'No images found for this page. Please try a different page.';
+        } else if (response.status >= 500) {
+          errorMessage = 'Server is temporarily unavailable. Please try again later.';
+        } else if (response.status >= 400) {
+          errorMessage = `Failed to load images: ${response.statusText}`;
+        } else {
+          errorMessage = 'Failed to fetch images';
+        }
+
+        throw HTTPError.fromResponse(response, errorMessage);
       }
 
       const images: LoremPicsumImage[] = await response.json();
@@ -27,7 +40,7 @@ export class ApiService {
 
       // Handle network errors or other non-HTTP errors
       console.error('Network or parsing error:', error);
-      throw new HTTPError('Network error occurred while fetching images', 0);
+      throw new HTTPError('Network connection error. Please check your internet connection and try again.', 0);
     }
   }
 

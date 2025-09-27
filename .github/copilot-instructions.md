@@ -154,7 +154,7 @@ export const useImages = (page: number, limit: number): UseImagesResult => {
     refetch,
   } = useQuery<ImageData[], HTTPError>({
     queryKey: ["images", page, limit],
-    queryFn: () => ApiService.getImages(page, limit),
+    queryFn: () => ImageService.getImages(page, limit),
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
     retry: (failureCount, error) => {
@@ -197,7 +197,7 @@ export const useImages = (page: number, limit: number): UseImagesResult => {
 // ✅ File naming conventions
 ComponentName.tsx; // React components
 useCustomHook.ts; // Custom hooks
-apiService.ts; // API services
+imageService.ts; // API services
 types.ts; // Type definitions
 HTTPError.ts; // Error classes
 index.ts; // Barrel exports
@@ -223,7 +223,7 @@ index.ts; // Barrel exports
 
 ```typescript
 // ✅ API service structure
-export class ApiService {
+export class ImageService {
   private static readonly BASE_URL = "https://api.example.com";
 
   static async getData(params: RequestParams): Promise<ResponseData> {

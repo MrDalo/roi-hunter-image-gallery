@@ -1,19 +1,12 @@
 import { useState } from "react";
-import {
-  Container,
-  Typography,
-  AppBar,
-  Toolbar,
-  Box,
-  Alert,
-} from "@mui/material";
-import { PhotoLibrary } from "@mui/icons-material";
+import { Container, Typography, Box } from "@mui/material";
 import { useImages } from "./hooks/useImages";
 import { usePaginationContext } from "./hooks/usePaginationContext";
 import ImageGrid from "./components/ImageGrid";
 import Pagination from "./components/Pagination";
 import ImageModal from "./components/ImageModal";
 import type { LoremPicsumImage } from "./types";
+import HeaderBar from "./components/HeaderBar";
 
 function App() {
   const [selectedImage, setSelectedImage] = useState<LoremPicsumImage | null>(
@@ -21,7 +14,6 @@ function App() {
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Use context-based pagination
   const { currentPage, canGoNext, canGoPrevious, goToNext, goToPrevious } =
     usePaginationContext();
 
@@ -46,15 +38,8 @@ function App() {
         flexDirection: "column",
       }}
     >
-      {/* App Bar */}
-      <AppBar position="static" elevation={1}>
-        <Toolbar>
-          <PhotoLibrary sx={{ mr: 2 }} />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            ROI Hunter Image Gallery
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      {/* Header Bar */}
+      <HeaderBar />
 
       {/* Main Content */}
       <Box component="main" sx={{ flexGrow: 1 }}>
@@ -73,12 +58,6 @@ function App() {
             Browse through beautiful photos with pagination. Click on any image
             to view it in full size.
           </Typography>
-
-          {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              Failed to load images. Please try again later.
-            </Alert>
-          )}
 
           {/* Image Grid */}
           <ImageGrid

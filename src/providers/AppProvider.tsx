@@ -6,10 +6,8 @@ import { PaginationProvider } from "./PaginationProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  // Create a client
   const queryClient = new QueryClient();
 
-  // Create Material UI theme
   const theme = createTheme({
     palette: {
       mode: "light",
