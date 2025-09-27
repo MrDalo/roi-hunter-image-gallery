@@ -9,7 +9,7 @@ import {
   Alert,
 } from "@mui/material";
 import type { LoremPicsumImage } from "../types";
-import { LoremPicsumService } from "../services/loremPicsumService";
+import { ApiService } from "../services/apiService";
 import { HTTPError } from "../errors";
 
 interface ImageGridProps {
@@ -118,7 +118,7 @@ const ImageGrid: React.FC<ImageGridProps> = ({
           <CardMedia
             component="img"
             height="200"
-            image={LoremPicsumService.getImageUrl(image.id, 400, 300)}
+            image={ApiService.getImageUrl(image.id, 400, 300)}
             alt={`Photo by ${image.author}`}
             sx={{ objectFit: "cover" }}
           />

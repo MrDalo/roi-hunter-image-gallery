@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { PhotoLibrary } from "@mui/icons-material";
 import { useImages } from "./hooks/useImages";
-import { usePagination } from "./hooks/usePagination";
+import { usePaginationContext } from "./hooks/usePaginationContext";
 import ImageGrid from "./components/ImageGrid";
 import Pagination from "./components/Pagination";
 import ImageModal from "./components/ImageModal";
@@ -21,12 +21,9 @@ function App() {
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Use context-based pagination
   const { currentPage, canGoNext, canGoPrevious, goToNext, goToPrevious } =
-    usePagination(
-      undefined, // Unknown total items
-      10, // 10 images per page
-      1 // Start from page 1
-    );
+    usePaginationContext();
 
   const { images, isLoading, error } = useImages(currentPage, 10);
 

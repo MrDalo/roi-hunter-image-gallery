@@ -3,7 +3,7 @@ import { HTTPError } from '../errors';
 
 const BASE_URL = 'https://picsum.photos';
 
-export class LoremPicsumService {
+export class ApiService {
   /**
    * Fetch a list of images from Lorem Picsum API
    * @param page - Page number (1-based)

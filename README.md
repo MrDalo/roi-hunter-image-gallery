@@ -1,170 +1,249 @@
-# React + TypeScript + Vite
+# ROI Hunter Image Gallery
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive React application that displays a curated gallery of images from the Lorem Picsum API. Built with production-ready architecture patterns, this application demonstrates clean code practices, robust state management, and excellent user experience.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19.1.1-blue.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue.svg)
+![Material UI](https://img.shields.io/badge/Material%20UI-7.3.2-blue.svg)
+![TanStack Query](https://img.shields.io/badge/TanStack%20Query-5.90.2-orange.svg)
+![Vite](https://img.shields.io/badge/Vite-7.1.7-yellow.svg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎯 Overview
 
-## React Compiler
+This image gallery application showcases modern React development practices with a focus on:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Clean Architecture**: Well-organized codebase with clear separation of concerns
+- **Type Safety**: Full TypeScript implementation with strict typing
+- **Performance**: Intelligent caching and optimized rendering
+- **User Experience**: Responsive design with loading states and error handling
+- **Developer Experience**: Hot reload, TypeScript support, and comprehensive tooling
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Core Functionality
 
-# Image Gallery
+- 📸 **Image Gallery**: Displays 10 curated images per page in a responsive grid
+- 🔄 **Pagination**: Navigate through images with Previous/Next controls
+- 🔍 **Modal Viewer**: Click images to view in full size with metadata
+- ⚡ **Smart Caching**: Session-based API response caching for optimal performance
+- 📱 **Responsive Design**: Adapts seamlessly across desktop, tablet, and mobile devices
 
-A responsive React + TypeScript image gallery application that displays photos from the Lorem Picsum API with pagination and modal functionality.
+### Technical Features
 
-## Features
+- 🔒 **Type Safety**: Complete TypeScript coverage with strict configuration
+- 🧩 **Context API**: Global state management with React Context + Provider pattern
+- 🎯 **Custom Hooks**: Reusable logic for data fetching and pagination
+- ❌ **Error Handling**: Graceful error states with user-friendly messages
+- 🎨 **Material Design**: Professional UI components with consistent theming
+- 🔧 **Developer Tools**: React Query DevTools for debugging and monitoring
 
-- ✅ Load image links from the Lorem Picsum List Images API
-- ✅ Display 10 images in equally sized boxes on one page
-- ✅ Add paging (next/previous) to browse through the images
-- ✅ Cache API responses during one session (resets on page refresh)
-- ✅ Click on images to open a modal showing the image in a bigger size
-- ✅ Built with React, TypeScript, and Material UI
-- ✅ Responsive design that works on mobile and desktop
-- ✅ Session-based caching with TanStack Query
-- ✅ Elegant loading states and error handling
+## 🏗️ Architecture
 
-## Tech Stack
-
-- **React 19** - UI framework
-- **TypeScript** - Type safety
-- **Material UI (MUI)** - UI component library
-- **TanStack Query** - Data fetching and caching
-- **Vite** - Build tool and development server
-- **Lorem Picsum API** - Source of random images
-
-## Installation & Setup
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone <repository-url>
-   cd roi-hunter-image-gallery
-   ```
-
-2. **Install dependencies:**
-
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server:**
-
-   ```bash
-   npm run dev
-   ```
-
-4. **Open your browser:**
-   Navigate to `http://localhost:5173/`
-
-## Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run lint` - Run ESLint
-- `npm run preview` - Preview production build
-
-## Project Structure
+### Project Structure
 
 ```
 src/
-├── components/          # React components
-│   ├── ImageGrid.tsx   # Grid display of images
-│   ├── ImageModal.tsx  # Modal for full-size images
-│   └── Pagination.tsx  # Navigation controls
-├── hooks/              # Custom React hooks
-│   ├── useImages.ts    # Image fetching with caching
-│   └── usePagination.ts # Pagination logic
-├── services/           # API services
-│   └── loremPicsumService.ts # Lorem Picsum API integration
-├── types/              # TypeScript type definitions
-│   └── index.ts        # Application interfaces
-├── App.tsx             # Main application component
-└── main.tsx           # Application entry point
+├── components/           # React components (one per file)
+│   ├── ImageGrid.tsx     # Responsive image grid with hover effects
+│   ├── ImageModal.tsx    # Modal for full-size image viewing
+│   └── Pagination.tsx    # Navigation controls component
+├── contexts/             # React Context definitions
+│   └── PaginationContext.tsx  # Pagination context creation
+├── providers/            # Context Provider implementations
+│   ├── AppProvider.tsx   # Main app provider wrapper
+│   └── PaginationProvider.tsx  # Pagination state management
+├── hooks/                # Custom React hooks
+│   ├── useImages.ts      # Image fetching with TanStack Query
+│   └── usePaginationContext.ts  # Pagination context consumer
+├── services/             # External API integrations
+│   └── apiService.ts     # Lorem Picsum API service layer
+├── errors/               # Custom error handling
+│   ├── HTTPError.ts      # Custom HTTP error class
+│   └── index.ts          # Error exports
+├── types/                # TypeScript type definitions
+│   └── index.ts          # Application interfaces and types
+├── App.tsx               # Main application component
+└── main.tsx             # Application entry point
 ```
 
-## How It Works
+### Design Patterns Used
 
-1. **API Integration**: Uses Lorem Picsum's REST API to fetch image metadata
-2. **Caching**: TanStack Query provides intelligent caching that persists during the session
-3. **Pagination**: Navigate through images with Previous/Next buttons
-4. **Responsive Design**: CSS Grid automatically adjusts columns based on screen size
-5. **Modal Display**: Click any image to view it in full size with additional details
+- **Context + Provider Pattern**: Global state management for pagination
+- **Custom Hooks Pattern**: Reusable stateful logic encapsulation
+- **Service Layer Pattern**: API abstraction and error handling
+- **Compound Component Pattern**: Modal and grid component composition
+- **Error Boundary Pattern**: Graceful error handling and recovery
 
-## API Usage
+## 🚀 Tech Stack
 
-The application uses the following Lorem Picsum endpoints:
+### Frontend Framework
 
-- `GET /v2/list?page={page}&limit={limit}` - Fetch image list
-- `/{width}/{height}?id={id}` - Get specific image with dimensions
+- **[React 19](https://react.dev/)** - Latest React with modern features and optimizations
+- **[TypeScript 5.8.3](https://www.typescriptlang.org/)** - Static type checking with strict configuration
 
-## Browser Support
+### UI & Styling
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+- **[Material UI v7](https://mui.com/)** - React component library with Material Design
+- **[Emotion](https://emotion.sh/)** - CSS-in-JS library for Material UI theming
 
-## Assignment Requirements
+### State Management & Data Fetching
 
-### Original Assignment:
+- **[TanStack Query v5](https://tanstack.com/query/)** - Powerful data synchronization and caching
+- **[React Context API](https://react.dev/reference/react/createContext)** - Built-in global state management
 
-#### Create an image library with the following functionality:
+### Build & Development Tools
 
-- Load image links from the Lorem Picsum List Images API. ✅
-- Display 10 images in equally sized boxes on one page. ✅
-- Add paging (next/previous) to browse through the images. ✅
-- Cache API responses during one session (the cache should reset on page refresh). ✅
-- When an image is clicked, open a modal showing the image in a bigger size. ✅
-- Bonus (optional): Use any AI tool of your choice to generate a description of the image and display it below the image in the modal. ⚠️ (Not implemented - see Future Enhancements)
-- Practical Notes
+- **[Vite](https://vitejs.dev/)** - Next generation frontend tooling with HMR
+- **[ESLint](https://eslint.org/)** - Code linting with React-specific rules
+- **[TypeScript ESLint](https://typescript-eslint.io/)** - TypeScript-aware linting
 
-- Use React, TypeScript and Material UI. ✅
-- Functionality and code quality are key, design can be simple. ✅
-- Please include short instructions on how to run your solution. ✅
-- Feel free to use any libraries and tools you find useful, including AI. ✅
+### External API
 
-## Future Enhancements
+- **[Lorem Picsum API](https://picsum.photos/)** - RESTful API for placeholder images
 
-- **AI Image Descriptions**: Integrate with vision AI APIs (OpenAI GPT-4V, Google Vision, etc.)
-- **Image Search**: Add filtering and search functionality
-- **Favorites**: Allow users to mark and save favorite images
-- **Download**: Enable image download functionality
-- **Infinite Scroll**: Replace pagination with infinite scroll
-- **Image Metadata**: Display more detailed EXIF information
+## 🛠️ Installation & Setup
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Prerequisites
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+- **Node.js 22.12+** (LTS recommended)
+- **npm 10+** or **yarn 4+**
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+### Quick Start
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/MrDalo/roi-hunter-image-gallery.git
+   cd roi-hunter-image-gallery
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Start development server**
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. **Open in browser**
+   ```
+   http://localhost:5173
+   ```
+
+### Build for Production
+
+```bash
+# Build the application
+npm run build
+
+# Preview production build locally
+npm run preview
 ```
+
+## 📜 Available Scripts
+
+| Command           | Description                              |
+| ----------------- | ---------------------------------------- |
+| `npm run dev`     | Start development server with hot reload |
+| `npm run build`   | Build optimized production bundle        |
+| `npm run preview` | Preview production build locally         |
+| `npm run lint`    | Run ESLint code analysis                 |
+
+## 🔧 Configuration
+
+### Environment Variables
+
+No environment variables required - the application uses public APIs only.
+
+### TypeScript Configuration
+
+- **Strict Mode**: Enabled for maximum type safety
+- **Module Resolution**: Node-style with path mapping
+- **Target**: ES2022 for modern browser support
+
+### Build Configuration
+
+- **Bundle Splitting**: Automatic code splitting for optimal loading
+- **Tree Shaking**: Dead code elimination for smaller bundles
+- **Source Maps**: Generated for production debugging
+
+## 🎨 Features Deep Dive
+
+### Responsive Image Grid
+
+- **Desktop**: 5-column grid layout
+- **Tablet**: 3-column grid layout
+- **Mobile**: 2-column grid layout
+- **Small Mobile**: 1-column grid layout
+
+### Smart Caching Strategy
+
+- **Session-based**: Cache persists until browser refresh
+- **Stale-while-revalidate**: 5-minute stale time for optimal UX
+- **Background refresh**: Automatic data updates
+- **Error retry**: Smart retry logic for failed requests
+
+### Modal Experience
+
+- **Backdrop blur**: Professional modal overlay
+- **Keyboard navigation**: ESC to close, arrow keys for navigation
+- **Touch-friendly**: Optimized for mobile interactions
+- **Image metadata**: Author, dimensions, and source information
+
+## 🧪 Code Quality
+
+### Type Safety
+
+- **100% TypeScript coverage**: No `any` types used
+- **Strict configuration**: Comprehensive type checking
+- **Interface segregation**: Specific types for each use case
+
+### Error Handling
+
+- **Custom HTTPError class**: Structured error management
+- **Network error detection**: Distinguishes client vs server errors
+- **User-friendly messages**: Contextual error display
+- **Graceful degradation**: App remains functional during errors
+
+### Performance Optimizations
+
+- **React.memo**: Prevent unnecessary re-renders
+- **useMemo/useCallback**: Expensive calculation caching
+- **Image lazy loading**: Progressive image loading
+- **Bundle optimization**: Minimal production bundle size
+
+## 🌐 API Integration
+
+### Lorem Picsum Endpoints Used
+
+```typescript
+// Fetch paginated image list
+GET /v2/list?page={page}&limit={limit}
+
+// Get specific image with dimensions
+GET /{width}/{height}?id={id}
+
+// Response format
+{
+  "id": "1",
+  "author": "Alejandro Escamilla",
+  "width": 5000,
+  "height": 3333,
+  "url": "https://unsplash.com/...",
+  "download_url": "https://picsum.photos/..."
+}
+```
+
+### Error Handling Strategy
+
+- **4xx errors**: Don't retry, show user-friendly message
+- **5xx errors**: Retry with exponential backoff
+- **Network errors**: Detect offline state, retry when online
