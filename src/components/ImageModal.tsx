@@ -14,30 +14,60 @@ import { ImageService } from "../services/imageService";
 import ImageModalSkeleton from "./ImageModalSkeleton";
 import ImageError from "./ImageError";
 import ImageDetails from "./ImageDetails";
+import { AIDescriptionService } from "../services/aiDescriptionService";
 
 interface ImageModalProps {
   image: LoremPicsumImage | null;
   isOpen: boolean;
   onClose: () => void;
-  description?: string;
 }
 
-const ImageModal: React.FC<ImageModalProps> = ({
-  image,
-  isOpen,
-  onClose,
-  description,
-}) => {
+const ImageModal: React.FC<ImageModalProps> = ({ image, isOpen, onClose }) => {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
+  const [aiDescription, setAiDescription] = useState<string>("");
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const [aiError, setAiError] = useState(false);
 
   // Reset loading state when modal opens with new image
   useEffect(() => {
     if (isOpen && image) {
       setIsImageLoading(true);
       setImageError(false);
+      setAiDescription("");
+      setIsAiLoading(false);
+      setAiError(false);
     }
   }, [isOpen, image]);
+
+  // Generate AI description when conditions are met
+  useEffect(() => {
+    // Early return if conditions not met
+    if (isImageLoading || imageError || !image || !isOpen || aiDescription) {
+      return;
+    }
+
+    const generateAiDescription = async () => {
+      setIsAiLoading(true);
+      setAiError(false);
+
+      try {
+        const description = await AIDescriptionService.generateDescription(
+          ImageService.getLargeImageUrl(image.id)
+        );
+        setAiDescription(description);
+      } catch (error) {
+        console.error("Failed to generate AI description:", error);
+        setAiError(true);
+      } finally {
+        setIsAiLoading(false);
+      }
+    };
+
+    // Small delay to ensure image is fully loaded
+    const timeoutId = setTimeout(generateAiDescription, 500);
+    return () => clearTimeout(timeoutId);
+  }, [isImageLoading, imageError, image, isOpen, aiDescription]);
 
   if (!image) return null;
 
@@ -81,11 +111,19 @@ const ImageModal: React.FC<ImageModalProps> = ({
             bgcolor: "background.paper",
             borderRadius: 2,
             boxShadow: 24,
-            overflow: "hidden",
+            overflow: "auto",
             outline: "none",
           }}
         >
-          <Card sx={{ position: "relative", height: "100%" }}>
+          <Card
+            sx={{
+              position: "relative",
+              height: "100%",
+              minHeight: 0,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             {/* Close button */}
             <IconButton
               onClick={onClose}
@@ -105,7 +143,18 @@ const ImageModal: React.FC<ImageModalProps> = ({
             </IconButton>
 
             {/* Image with skeleton fallback */}
-            <Box sx={{ position: "relative" }}>
+            <Box
+              sx={{
+                position: "relative",
+                overflow: "hidden",
+                height: {
+                  xs: "40vh",
+                  sm: "45vh",
+                  md: "50vh",
+                },
+                flexShrink: 0,
+              }}
+            >
               {/* Skeleton placeholder */}
               {isImageLoading && <ImageModalSkeleton />}
 
@@ -119,7 +168,9 @@ const ImageModal: React.FC<ImageModalProps> = ({
                   onError={handleImageError}
                   sx={{
                     width: "100%",
-                    maxHeight: "70vh",
+                    height: "100%",
+                    maxWidth: "100%",
+                    maxHeight: "100%",
                     objectFit: "contain",
                     bgcolor: "grey.100",
                     display: isImageLoading ? "none" : "block",
@@ -132,7 +183,14 @@ const ImageModal: React.FC<ImageModalProps> = ({
             </Box>
 
             {/* Image details */}
-            <ImageDetails image={image} description={description} />
+            <Box sx={{ flex: "0 0 auto" }}>
+              <ImageDetails
+                image={image}
+                aiDescription={aiDescription}
+                isAiLoading={isAiLoading}
+                aiError={aiError}
+              />
+            </Box>
           </Card>
         </Box>
       </Fade>

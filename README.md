@@ -26,6 +26,7 @@ This image gallery application showcases modern React development practices with
 - 🔄 **Pagination**: Navigate through images with Previous/Next controls
 - 🔍 **Modal Viewer**: Click images to view in full size with metadata
 - ⚡ **Smart Caching**: Session-based API response caching for optimal performance
+- 🧠 **AI Descriptions**: Automatic image captioning using Google Gemini Pro Vision
 - 📱 **Responsive Design**: Adapts seamlessly across desktop, tablet, and mobile devices
 
 ### Technical Features
@@ -56,7 +57,8 @@ src/
 │   ├── useImages.ts      # Image fetching with TanStack Query
 │   └── usePaginationContext.ts  # Pagination context consumer
 ├── services/             # External API integrations
-│   └── imageService.ts     # Lorem Picsum API service layer
+│   ├── imageService.ts     # Lorem Picsum API service layer
+│   └── aiDescriptionService.ts  # AI image captioning service
 ├── errors/               # Custom error handling
 │   ├── HTTPError.ts      # Custom HTTP error class
 │   └── index.ts          # Error exports
@@ -100,6 +102,29 @@ src/
 ### External API
 
 - **[Lorem Picsum API](https://picsum.photos/)** - RESTful API for placeholder images
+- **[Google Gemini 2.0 Flash](https://ai.google.dev/)** - AI image captioning service (API key required)
+
+## 🤖 AI Features
+
+### Automatic Image Descriptions
+
+The application includes an AI-powered image captioning feature that generates descriptive text for images using Google's Gemini 2.0 Flash model.
+
+**Key Features:**
+
+- **High Quality**: State-of-the-art image understanding and natural language generation
+- **Affordable**: Generous free tier (15 RPM, 1,500 RPD) and very low paid pricing (~$0.0025/image)
+- **Fast Responses**: Typically 1-3 seconds for description generation
+- **Error Handling**: Graceful fallbacks when AI service is unavailable
+- **User Experience**: Loading skeleton and error states for smooth UX
+
+**Technical Implementation:**
+
+- **Model**: `gemini-2.0-flash` - Google's latest multimodal AI model
+- **Processing**: Client-side image conversion to base64 format for API compatibility
+- **Authentication**: Uses `x-goog-api-key` header for secure API access
+- **Caching**: Generated descriptions are cached per image to avoid duplicate requests
+- **Fallback**: Service availability check with graceful degradation
 
 ## 🛠️ Installation & Setup
 
@@ -125,7 +150,24 @@ src/
    yarn install
    ```
 
-3. **Start development server**
+3. **Configure AI Features (Optional)**
+
+   To enable AI image descriptions, you'll need to set up a Google Gemini API key:
+
+   a. **Get API Key**: Visit [Google AI Studio](https://makersuite.google.com/) and create a free API key
+
+   b. **Copy .env.example file**: In the project root, copy a `.env.example` file adn rename it to `.env`:
+
+   ```bash
+   # .env
+   VITE_GEMINI_API_KEY=your_api_key_here
+   ```
+
+   c. **Replace placeholder**: Replace `your_api_key_here` with your actual API key
+
+   > **Note**: Without this setup, AI descriptions will show a configuration message instead of generating captions.
+
+4. **Start development server**
 
    ```bash
    npm run dev
@@ -133,7 +175,7 @@ src/
    yarn dev
    ```
 
-4. **Open in browser**
+5. **Open in browser**
    ```
    http://localhost:5173
    ```
@@ -161,7 +203,21 @@ npm run preview
 
 ### Environment Variables
 
-No environment variables required - the application uses public APIs only.
+Create a `.env` file in the project root for AI features:
+
+```bash
+# Google Gemini AI API Key (Optional)
+# Get your free API key at: https://makersuite.google.com/
+VITE_GEMINI_API_KEY=your_api_key_here
+```
+
+**Environment Variables:**
+
+| Variable              | Required | Description                                     |
+| --------------------- | -------- | ----------------------------------------------- |
+| `VITE_GEMINI_API_KEY` | Optional | Google Gemini API key for AI image descriptions |
+
+> **Note**: The application works without environment variables, but AI descriptions will be disabled.
 
 ### TypeScript Configuration
 
@@ -193,6 +249,7 @@ No environment variables required - the application uses public APIs only.
 
 ### Modal Experience
 
+- **AI Descriptions**: Automatic image captioning with loading states
 - **Backdrop blur**: Professional modal overlay
 - **Keyboard navigation**: ESC to close, arrow keys for navigation
 - **Touch-friendly**: Optimized for mobile interactions
