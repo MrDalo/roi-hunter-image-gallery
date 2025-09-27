@@ -15,7 +15,6 @@ export class ImageService {
       const response = await fetch(`${BASE_URL}/v2/list?page=${page}&limit=${limit}`);
 
       if (!response.ok) {
-        // Provide specific error messages based on status code
         let errorMessage: string;
 
         if (response.status === 404) {

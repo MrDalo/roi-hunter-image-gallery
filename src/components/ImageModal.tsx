@@ -29,7 +29,6 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, isOpen, onClose }) => {
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [aiError, setAiError] = useState(false);
 
-  // Reset loading state when modal opens with new image
   useEffect(() => {
     if (isOpen && image) {
       setIsImageLoading(true);
@@ -42,7 +41,6 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, isOpen, onClose }) => {
 
   // Generate AI description when conditions are met
   useEffect(() => {
-    // Early return if conditions not met
     if (isImageLoading || imageError || !image || !isOpen || aiDescription) {
       return;
     }
