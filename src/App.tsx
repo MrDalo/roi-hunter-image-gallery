@@ -1,34 +1,21 @@
-import { useState } from "react";
+import React from "react";
 import { Container, Box } from "@mui/material";
-import { useImages } from "./hooks/useImages";
-import { usePaginationContext } from "./hooks/usePaginationContext";
-import ImageGrid from "./components/ImageGrid";
-import Pagination from "./components/Pagination";
-import ImageModal from "./components/ImageModal";
-import HeaderBar from "./components/HeaderBar";
-import PageHeader from "./components/PageHeader";
-import type { LoremPicsumImage } from "./types";
+import { useImages, usePaginationContext, useImageModal } from "./hooks";
+import {
+  ImageGrid,
+  Pagination,
+  ImageModal,
+  HeaderBar,
+  PageHeader,
+} from "./components";
 
-function App() {
-  const [selectedImage, setSelectedImage] = useState<LoremPicsumImage | null>(
-    null
-  );
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const App: React.FC = () => {
+  const { selectedImage, isModalOpen, openModal, closeModal } = useImageModal();
 
   const { currentPage, canGoNext, canGoPrevious, goToNext, goToPrevious } =
     usePaginationContext();
 
   const { images, isLoading, error } = useImages(currentPage, 10);
-
-  const handleImageClick = (image: LoremPicsumImage) => {
-    setSelectedImage(image);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedImage(null);
-  };
 
   return (
     <Box
@@ -52,7 +39,7 @@ function App() {
             images={images}
             isLoading={isLoading}
             error={error}
-            onImageClick={handleImageClick}
+            onImageClick={openModal}
           />
 
           {/* Pagination */}
@@ -72,10 +59,10 @@ function App() {
       <ImageModal
         image={selectedImage}
         isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        onClose={closeModal}
       />
     </Box>
   );
-}
+};
 
 export default App;

@@ -11,10 +11,11 @@ import {
 import { Close } from "@mui/icons-material";
 import type { LoremPicsumImage } from "../types";
 import { ImageService } from "../services/imageService";
+import { AIDescriptionService } from "../services/aiDescriptionService";
+import { HTTPError } from "../errors";
 import ImageModalSkeleton from "./ImageModalSkeleton";
 import ImageError from "./ImageError";
 import ImageDetails from "./ImageDetails";
-import { AIDescriptionService } from "../services/aiDescriptionService";
 
 interface ImageModalProps {
   image: LoremPicsumImage | null;
@@ -27,7 +28,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, isOpen, onClose }) => {
   const [imageError, setImageError] = useState(false);
   const [aiDescription, setAiDescription] = useState<string>("");
   const [isAiLoading, setIsAiLoading] = useState(false);
-  const [aiError, setAiError] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen && image) {
@@ -35,7 +36,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, isOpen, onClose }) => {
       setImageError(false);
       setAiDescription("");
       setIsAiLoading(false);
-      setAiError(false);
+      setAiError(null);
     }
   }, [isOpen, image]);
 
@@ -47,7 +48,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, isOpen, onClose }) => {
 
     const generateAiDescription = async () => {
       setIsAiLoading(true);
-      setAiError(false);
+      setAiError(null);
 
       try {
         const description = await AIDescriptionService.generateDescription(
@@ -56,7 +57,13 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, isOpen, onClose }) => {
         setAiDescription(description);
       } catch (error) {
         console.error("Failed to generate AI description:", error);
-        setAiError(true);
+
+        // Handle HTTPError with specific error messages
+        if (error instanceof HTTPError) {
+          setAiError(error.message);
+        } else {
+          setAiError("Failed to generate AI description");
+        }
       } finally {
         setIsAiLoading(false);
       }

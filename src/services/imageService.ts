@@ -38,7 +38,6 @@ export class ImageService {
       }
 
       // Handle network errors or other non-HTTP errors
-      console.error('Network or parsing error:', error);
       throw new HTTPError('Network connection error. Please check your internet connection and try again.', 0);
     }
   }

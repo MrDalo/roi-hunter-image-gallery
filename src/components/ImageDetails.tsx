@@ -7,14 +7,14 @@ interface ImageDetailsProps {
   image: LoremPicsumImage;
   aiDescription?: string;
   isAiLoading?: boolean;
-  aiError?: boolean;
+  aiError?: string | null;
 }
 
 const ImageDetails: React.FC<ImageDetailsProps> = ({
   image,
   aiDescription,
   isAiLoading = false,
-  aiError = false,
+  aiError = null,
 }) => {
   return (
     <CardContent sx={{ p: 3 }}>
@@ -40,7 +40,7 @@ const ImageDetails: React.FC<ImageDetailsProps> = ({
 
         {aiError && (
           <Alert severity="warning" icon={<Error />} sx={{ mt: 1 }}>
-            Unable to generate description at this time.
+            {aiError}
           </Alert>
         )}
 
