@@ -145,10 +145,10 @@ The application includes an AI-powered image captioning feature that generates d
 
    ```bash
    # .env
-   VITE_GEMINI_API_KEY=your_api_key_here
+   VITE_GEMINI_API_KEY=your_gemini_key_here
    ```
 
-   c. **Replace placeholder**: Replace `your_api_key_here` with your actual API key
+   c. **Replace placeholder**: Replace `your_gemini_key_here` with your actual API key
 
    > **Note**: Without this setup, AI descriptions will show a configuration message instead of generating captions.
 
@@ -193,7 +193,7 @@ Create a `.env` file in the project root for AI features:
 ```bash
 # Google Gemini AI API Key (Optional)
 # Get your free API key at: https://makersuite.google.com/
-VITE_GEMINI_API_KEY=your_api_key_here
+VITE_GEMINI_API_KEY=your_gemini_key_here
 ```
 
 **Environment Variables:**
