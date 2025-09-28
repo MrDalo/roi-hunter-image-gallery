@@ -37,7 +37,6 @@ export class ImageService {
         throw error;
       }
 
-      // Handle network errors or other non-HTTP errors
       throw new HTTPError('Network connection error. Please check your internet connection and try again.', 0);
     }
   }

@@ -44,28 +44,13 @@ This image gallery application showcases modern React development practices with
 
 ```
 src/
-├── components/           # React components (one per file)
-│   ├── ImageGrid.tsx     # Responsive image grid with hover effects
-│   ├── ImageModal.tsx    # Modal for full-size image viewing
-│   └── Pagination.tsx    # Navigation controls component
-├── contexts/             # React Context definitions
-│   └── PaginationContext.tsx  # Pagination context creation
-├── providers/            # Context Provider implementations
-│   ├── AppProvider.tsx   # Main app provider wrapper
-│   └── PaginationProvider.tsx  # Pagination state management
-├── hooks/                # Custom React hooks
-│   ├── useImages.ts      # Image fetching with TanStack Query
-│   └── usePaginationContext.ts  # Pagination context consumer
-├── services/             # External API integrations
-│   ├── imageService.ts     # Lorem Picsum API service layer
-│   └── aiDescriptionService.ts  # AI image captioning service
-├── errors/               # Custom error handling
-│   ├── HTTPError.ts      # Custom HTTP error class
-│   └── index.ts          # Error exports
-├── types/                # TypeScript type definitions
-│   └── index.ts          # Application interfaces and types
-├── App.tsx               # Main application component
-└── main.tsx             # Application entry point
+├── components/          # React components (one per file)
+├── errors/             # Custom error classes
+├── hooks/              # Custom React hooks
+├── services/           # API services and external integrations
+├── types/              # TypeScript type definitions
+├── App.tsx             # Main application component
+└── main.tsx           # Application entry point
 ```
 
 ### Design Patterns Used

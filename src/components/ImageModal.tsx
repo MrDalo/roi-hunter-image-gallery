@@ -58,7 +58,6 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, isOpen, onClose }) => {
       } catch (error) {
         console.error("Failed to generate AI description:", error);
 
-        // Handle HTTPError with specific error messages
         if (error instanceof HTTPError) {
           setAiError(error.message);
         } else {
@@ -69,7 +68,6 @@ const ImageModal: React.FC<ImageModalProps> = ({ image, isOpen, onClose }) => {
       }
     };
 
-    // Small delay to ensure image is fully loaded
     const timeoutId = setTimeout(generateAiDescription, 500);
     return () => clearTimeout(timeoutId);
   }, [isImageLoading, imageError, image, isOpen, aiDescription]);

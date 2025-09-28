@@ -210,13 +210,6 @@ index.ts; // Barrel exports
 - **Bundle optimization**: Avoid large dependencies, tree-shake unused code
 - **Image optimization**: Use appropriate image sizes and loading strategies
 
-### 🧪 **Testing Approach** (Future Implementation)
-
-- **Component testing**: Test component behavior, not implementation details
-- **Hook testing**: Test custom hooks with React Testing Library
-- **Error scenarios**: Always test error states and edge cases
-- **Integration testing**: Test component interactions and data flow
-
 ## API Integration Standards
 
 ### Service Layer Pattern

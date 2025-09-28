@@ -59,10 +59,9 @@ export class AIDescriptionService {
       console.error('Google Gemini AI Description Error:', error);
 
       if (error instanceof HTTPError) {
-        throw error; // Re-throw HTTPError instances
+        throw error;
       }
 
-      // Convert other errors to HTTPError
       if (error instanceof Error) {
         if (error.message.includes('Failed to fetch image')) {
           throw new HTTPError(this.ERROR_MESSAGES.IMAGE_FETCH_FAILED, 400);
