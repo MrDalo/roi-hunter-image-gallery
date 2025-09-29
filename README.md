@@ -141,7 +141,7 @@ The application includes an AI-powered image captioning feature that generates d
 
    a. **Get API Key**: Visit [Google AI Studio](https://makersuite.google.com/) and create a free API key
 
-   b. **Copy .env.example file**: In the project root, copy a `.env.example` file adn rename it to `.env`:
+   b. **Copy .env.example file**: In the project root, copy a `.env.example` file and rename it to `.env`:
 
    ```bash
    # .env
